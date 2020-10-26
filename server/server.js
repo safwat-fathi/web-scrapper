@@ -1,6 +1,6 @@
 const http = require("http");
 const app = require("./app");
-
+// const {minifyText} = require('./utils')
 const PORT = 4000;
 
 // @ts-ignore
