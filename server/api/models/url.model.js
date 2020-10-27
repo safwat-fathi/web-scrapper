@@ -1,29 +1,28 @@
 const mongoose = require("mongoose");
 
-const urlSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
-  URL: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  name: {
-    type: String,
-    default: "",
-  },
-  html: {
-    type: String,
-    required: true,
-  },
-  timestamps: {
-    created_at: Date,
-    updated_at: {
-      type: Date,
-      default: Date.now,
+const urlSchema = new mongoose.Schema(
+  {
+    _id: mongoose.Schema.Types.ObjectId,
+    URL: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    last_checked: Date,
+    title: {
+      type: String,
+      default: "",
+    },
+    htmlTextContent: {
+      type: String,
+      required: true,
+    },
+    lastChecked: {
+      type: Date,
+      default: "",
+    },
   },
-});
+  { timestamps: true }
+);
 
 const URL = mongoose.model("URL", urlSchema);
 
