@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const urlSchema = new mongoose.Schema(
   {
     _id: mongoose.Schema.Types.ObjectId,
-    URL: {
+    url: {
       type: String,
       required: true,
       trim: true,
@@ -11,10 +11,17 @@ const urlSchema = new mongoose.Schema(
     title: {
       type: String,
       default: "",
+      trim: true,
     },
-    htmlTextContent: {
-      type: String,
-      required: true,
+    versions: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Version",
+      },
+    ],
+    hasNewVersion: {
+      type: Boolean,
+      default: false,
     },
     lastChecked: {
       type: Date,

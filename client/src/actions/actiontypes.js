@@ -1,0 +1,5 @@
+export const actionTypes = {
+  ADD_URL_REQUEST: "ADD_URL_REQUEST",
+  ADD_URL_SUCCESS: "ADD_URL_SUCCESS",
+  ADD_URL_FAILURE: "ADD_URL_FAILURE",
+};
