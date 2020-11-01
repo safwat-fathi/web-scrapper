@@ -1,17 +1,46 @@
 import { actionTypes } from "../actions/actiontypes";
-
-const initState = {
-  response: null,
-  loading: false,
-  feedBackMsg: "",
-  urls: [],
-};
+import initState from "./initState";
 
 export const rootReducer = (state = initState, action) => {
-  const { ADD_URL_REQUEST, ADD_URL_SUCCESS, ADD_URL_FAILURE } = actionTypes;
   const { urls } = state;
+  // action types
+  const {
+    // get urls
+    GET_URLS_REQUEST,
+    GET_URLS_SUCCESS,
+    GET_URLS_FAILURE,
+    // add urls
+    ADD_URL_REQUEST,
+    ADD_URL_SUCCESS,
+    ADD_URL_FAILURE,
+  } = actionTypes;
 
   switch (action.type) {
+    // ----------------
+    // get url reducer
+    // ----------------
+    case GET_URLS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_URLS_SUCCESS:
+      return {
+        loading: false,
+        feedBackMsg: "URLs fetched successfully",
+        response: action.payload,
+        urls: [...urls, action.payload],
+      };
+    case GET_URLS_FAILURE:
+      return {
+        loading: false,
+        feedBackMsg: "Not able to fetch URLs",
+        response: action.payload,
+        urls,
+      };
+    // ----------------
+    // add url reducer
+    // ----------------
     case ADD_URL_REQUEST:
       return {
         ...state,
@@ -20,7 +49,6 @@ export const rootReducer = (state = initState, action) => {
 
     case ADD_URL_SUCCESS:
       return {
-        ...state,
         response: action.payload,
         urls: [...urls, action.payload],
         feedBackMsg: "URL added successfully",
@@ -28,8 +56,7 @@ export const rootReducer = (state = initState, action) => {
       };
     case ADD_URL_FAILURE:
       return {
-        ...state,
-        response: null,
+        response: action.payload,
         urls,
         feedBackMsg: "Adding URL failed",
         loading: false,
@@ -38,3 +65,5 @@ export const rootReducer = (state = initState, action) => {
       return state;
   }
 };
+
+export default rootReducer;

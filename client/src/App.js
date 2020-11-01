@@ -1,16 +1,32 @@
-import React, { useState } from "react";
+import { api } from "./utils/api";
+import React, { useState, useEffect } from "react";
 // connect to redux store
 import { connect } from "react-redux";
 // redux actions
-import { getUrlContent } from "./actions";
+import { getAllUrls, getUrlContent } from "./actions";
 
-const App = ({ urls, response, loading, feedBackMsg }) => {
+const App = (props) => {
+  const { urls, loading, response, feedbackMsg } = props;
   // form inputs
   const [inputVals, setInputVals] = useState({
     url: "",
     title: "",
   });
-  //
+
+  useEffect(() => {
+    console.log("mounted");
+    getAllUrls();
+  }, []);
+
+  useEffect(() => {
+    console.log(response);
+  }, [response]);
+
+  // useEffect(() => {
+  //   console.log(loading);
+  // }, [loading]);
+
+  // handle inputs change
   const handleChange = (e) => {
     // set inputs
     setInputVals({
@@ -23,11 +39,23 @@ const App = ({ urls, response, loading, feedBackMsg }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submitted");
-    // post to API
-    getUrlContent(inputVals);
-  };
+    console.log(inputVals);
 
-  console.log(urls);
+    // post to API
+    // getUrlContent(inputVals);
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    api
+      .get("/urls")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
@@ -53,7 +81,7 @@ const App = ({ urls, response, loading, feedBackMsg }) => {
       <table>
         <thead>
           <tr>
-            <th>Title/URL</th>
+            <th>Title</th>
             <th>URL</th>
             <th>Last Checked</th>
           </tr>
@@ -80,7 +108,8 @@ const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUrlContent: (inputVals) => dispatch(getUrlContent(inputVals)),
+    getUrlContent: (inputs) => dispatch(getUrlContent(inputs)),
+    getAllUrls: () => dispatch(getAllUrls()),
   };
 };
 

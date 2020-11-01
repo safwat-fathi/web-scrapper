@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 // redux
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import { rootReducer } from "./reducers";
+import rootReducer from "./reducers";
 
 // redux thunk to handle async await actions
 import thunk from "redux-thunk";
@@ -12,7 +12,6 @@ import thunk from "redux-thunk";
 import App from "./App";
 
 import "./index.css";
-// import reportWebVitals from './reportWebVitals';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 

@@ -51,6 +51,4 @@ const scrape = async (req, res, next) => {
   next();
 };
 
-module.exports = {
-  scrape,
-};
+module.exports = scrape;
